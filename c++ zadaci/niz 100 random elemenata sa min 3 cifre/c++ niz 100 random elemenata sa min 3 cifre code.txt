@@ -1,0 +1,55 @@
+#include <iostream>
+
+using namespace std;
+
+int cifra(int n) {
+    int count=0,temp=n;
+    while (temp>0)
+    {
+        count++;
+        temp /= 10;
+    }
+    return count;
+}
+
+bool isProst(int n) {
+    for (int i=2;i<n;i++)
+    {
+        if (n%i==0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    int a[100];
+    srand(time(NULL));
+    for (int i=0;i<100;i++)
+    {
+        int random = rand()%100000+1;
+        if (cifra(random)>2 && cifra(random) % 2 != 0)
+        {
+            a[i]=random;
+        }
+        else
+        {
+            i--;
+        }
+    }
+    float prostCount=0;
+    for (int i=0;i<100;i++)
+    {
+        cout << a[i] << endl;
+        if (isProst(a[i]))
+        {
+            prostCount++;
+        }
+        
+    }
+    cout << "ovdje ima " << (prostCount/100)*100 << "% prostih brojeva";
+
+    return 0;
+}
