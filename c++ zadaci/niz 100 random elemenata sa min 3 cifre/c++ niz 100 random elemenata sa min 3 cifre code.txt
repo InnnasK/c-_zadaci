@@ -50,6 +50,10 @@ int main()
         
     }
     cout << "ovdje ima " << (prostCount/100)*100 << "% prostih brojeva";
+    if (prostCount==0)
+    {
+        cout << "nema prostih brojeva u nizu";
+    }
 
     return 0;
 }
