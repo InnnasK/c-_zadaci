@@ -1,0 +1,42 @@
+#include <iostream>
+
+using namespace std;
+
+/*Napišite program koji sabira sve brojeve do broja n koji u sebi ne sadrže broj 3 i 5.
+*/
+
+bool sadrzi(int n) {
+    while (n>0)
+    {
+        if (n % 10 == 3)
+        {
+            return true;
+        }
+        else if (n % 10 == 5)
+        {
+            return true;
+        }
+        n /= 10;
+    }
+    return false;
+}
+
+int suma(int n) {
+    int sum=0;
+    for (int i=0;i<n;i++)
+    {
+        if (sadrzi(i)==false)
+        {
+            sum+=i;
+        }
+    }
+    return sum;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    cout << suma(n);
+    return 0;
+}

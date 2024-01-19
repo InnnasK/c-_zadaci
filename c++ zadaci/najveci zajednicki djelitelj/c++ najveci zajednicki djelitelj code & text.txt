@@ -1,0 +1,36 @@
+#include <iostream>
+
+using namespace std;
+
+/*
+Pronađite najveći zajednički djelitelj 2 broja koja unosite.
+*/
+
+int djelitelj(int broj1, int broj2) {
+    int najveci;
+    if (broj1>broj2)
+    {
+        najveci=broj1;
+    }
+    else
+    {
+        najveci=broj2;
+    }
+    for (int i=najveci;i>0;i--)
+    {
+        if (broj1 % i == 0 && broj2 % i == 0)
+        {
+            return i;
+        }
+    }
+    return 1;
+}
+
+int main()
+{
+    int broj1, broj2;
+    cin >> broj1 >> broj2;
+    cout << djelitelj(broj1, broj2);
+    
+    return 0;
+}

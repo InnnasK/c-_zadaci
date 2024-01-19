@@ -1,0 +1,140 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+const int rows = 4;
+const int cols = 4;
+
+bool isBlack(int index1, int index2) {
+    return ((index1+index2)%2) != 0;
+}
+
+int countNumbers (int number) {
+    int count=0;
+    do
+    {
+        count++;
+        number/=10;
+    } while (number != 0);
+    
+    return count;
+}
+
+bool isSimetricMainDiagonal(int arr[][cols], int rows, int cols) {
+    for (int i=0;i<rows;i++)
+    {
+        for (int j=i+1;j<cols;j++)
+        {
+            if (arr[i][j] != arr[j][i])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+int indexRows(int arr[][cols], int red, int cols) {
+    int indexNajbolji = 0;
+    int prosjekRedova[rows] = {0};
+    for (int i=0;i<rows;i++)
+    {
+        for (int j=0;j<cols;j++)
+        {
+            prosjekRedova[i] += arr[i][j];
+        }
+        prosjekRedova[i] /= cols;
+        if (i>0)
+        {
+            if (prosjekRedova[i] > prosjekRedova[indexNajbolji])
+            {
+                indexNajbolji = i;
+            }
+        }
+    }
+    cout << "Najveci prosjek je: " << prosjekRedova[indexNajbolji] << endl;
+    return indexNajbolji;
+}
+
+int indexCols(int arr[][cols], int rows, int kol) {
+    int indexNajgori = 0;
+    int prosjekKolona[cols] = {0};
+    for (int j=0;j<cols;j++)
+    {
+        for (int i=0;i<rows;i++)
+        {
+            prosjekKolona[j] += arr[i][j];
+        }
+        prosjekKolona[j] /= rows;
+        if (j>0)
+        {
+            if (prosjekKolona[j] > prosjekKolona[indexNajgori])
+            {
+                indexNajgori = j;
+            }
+        }
+    }
+    cout << "Najmanji prosjek je: " << prosjekKolona[indexNajgori] << endl;
+    return indexNajgori;
+}
+
+void enterElements(int arr[][cols], int rows, int cols) {
+    for (int i=0;i<rows;i++)
+    {
+        for (int j=0;j<cols;j++)
+        {
+            if (isBlack(i,j)) {
+                int unos;
+                do
+                {
+                    cout << "Unesite parni broj sa neparnim brojem cifara (crno polje): " << endl;                    
+                    cin >> unos;    
+                } while (unos % 2 != 0 || countNumbers(unos) % 2 == 0);
+                arr[i][j] = unos;
+            }
+            else
+            {
+                int unos;
+                do
+                {
+                    cout << "Unesite neparni broj sa parnim brojem cifara (bijelo polje): " << endl;                    
+                    cin >> unos;    
+                } while (unos % 2 == 0 || countNumbers(unos) % 2 != 0);
+                arr[i][j] = unos;
+            }
+        }
+    }
+}
+
+void printElements(int arr[][cols], int rows, int cols) {
+    cout << "======================================" << endl;  
+    cout << "Niz ima elemente: " << endl;
+    for (int i=0;i<rows;i++)
+    {
+        for (int j=0;j<cols;j++)
+        {
+            cout << setw(4) << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << "======================================" << endl;
+}
+
+int main()
+{
+    int arr[rows][cols];
+    enterElements(arr, rows, cols);
+    printElements(arr, rows, cols);
+    if (isSimetricMainDiagonal(arr, rows, cols))
+    {
+        cout << "Niz je simetrican po glavnoj dijagonali." << endl;  
+        cout << "Index reda sa najvecim prosjekom je: " << indexRows(arr, rows, cols) << endl;
+    }
+    else {  
+        cout << "Niz nije simetrican po glavnoj dijagonali." << endl;     
+        cout << "Index kolone sa najmanjim prosjekom je: " << indexCols(arr, rows, cols) << endl;  
+    }    
+    cout << "======================================" << endl;
+    return 0;
+}

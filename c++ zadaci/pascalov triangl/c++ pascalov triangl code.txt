@@ -1,0 +1,30 @@
+#include <iostream>
+
+using namespace std;
+
+void pascal(int n) {
+    for (int i=1; i<=n;i++) // loop za redove
+    {
+        for (int j=1; j < n-i+1; j++) // loop koji pravi razmake i smanjuje za 1 te razmake u svakom novom redu
+        {
+            cout << " ";
+        }
+        
+        int val=1;  //pascal uvijek pocinje sa 1
+        for (int j=1; j<=i; j++)
+        {
+            cout << val << " ";
+            val = val * (i-j) / j;
+        }
+        cout << endl;
+    }
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    pascal(n);
+
+    return 0;
+}

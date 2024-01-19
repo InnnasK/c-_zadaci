@@ -1,0 +1,39 @@
+/*Prijedlog zadataka za parcijalni ispit
+=====================================================================================================================================================
+============================================= Postavka 1========================================================================
+
+Napišite program koji ispisuje sve Armstrong brojeve (narcicističke brojeve) do unesenog broja. Armstrong broj jeste broj kod kojeg je suma eksponencijalne vrijednosti njegovih cifri jednaka tom Broju. Eksponent se određuje u odnosu na broj cifara broja Npr. broj 153 ima 3 cifre, tako da je eksponent svake cifre 3 tj.  154= (1^3)+(5^3)+(3^3), primjer za broj 8208 jeste: 8208= (8^4)+(2^4)+(0^4)+(8^4),
+*/
+
+
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int cifraBroja(int n) {
+    int cifra = 0;
+    do {
+        cifra++;
+        n /= 10;
+    } while (n != 0);
+    
+    return cifra;
+}
+
+int main()
+{
+    int n,sum=0;
+    cin >> n;
+    int temp = n;
+    while (temp>0)
+    {
+        int br = temp % 10;
+        temp /= 10;
+        sum += pow(br,cifraBroja(n));
+    }
+    cout << sum;
+
+    return 0;
+}

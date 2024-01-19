@@ -1,0 +1,58 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+/*
+Napišite program koji svaki drugi broj u unesenom broju zamjeni sa brojem 0. Npr. za broj: 372385 -> 302080
+*/
+
+int brojCifri(int n) {
+    int cifra=0;
+    while (n>0)
+    {
+        cifra++;
+        n /= 10;
+    }
+    return cifra;
+}
+
+int zamjeni(int n) {
+    int pozicija = 1, novi = n;
+    if (brojCifri(n) % 2 != 0)
+    {
+        while (n>0)
+        {
+            int cifra = n % 10;
+            if (pozicija % 2 == 0)
+            {
+                novi -= cifra * pow(10, pozicija - 1);
+            }
+            n /= 10;
+            pozicija++;
+        }
+    }
+    else 
+    {
+        while (n>0)
+        {
+            int cifra = n % 10;
+            if (pozicija % 2 != 0)
+            {
+                novi -= cifra * pow(10, pozicija - 1);
+            }
+            n /= 10;
+            pozicija++;
+        }
+    }
+    return novi;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    cout << zamjeni(n);
+    
+    return 0;
+}
