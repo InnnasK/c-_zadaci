@@ -1,0 +1,51 @@
+#include <iostream>
+
+using namespace std;
+
+/*
+Napisati program koji ispisuje sve proste brojeve od 1 do n i sve brojeve cija je zadnja cifra parna
+*/
+
+bool isPrime(int n) {
+    for (int i=2;i<n;i++)
+    {
+        if (n%i==0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int zadnjaCifra(int n) {
+    int zadnjaCifraBr,temp=n;
+    while (temp>0)
+    {
+        zadnjaCifraBr=temp%10;
+        temp /= 10;
+    }
+    return zadnjaCifraBr;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    for (int i=1;i<=n;i++)
+    {
+        if (i<10 && isPrime(i))
+        {
+            cout << i << " ";
+        }
+        else if (i>9 && zadnjaCifra(i)%2==0)
+        {
+            cout << i << " ";
+        }
+        else if (zadnjaCifra(i)%2!=0 && isPrime(i))
+        {
+            cout << i << " ";
+        }
+    }
+
+    return 0;
+}
