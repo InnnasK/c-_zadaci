@@ -1,0 +1,28 @@
+#include <iostream>
+#include <cmath>
+
+/*
+Poštujući sve faze procesa programiranje, napisati program će odrediti i ispisati zadnje tri cifre broja x^n.Unos brojeva x i n vršiti u glavnoj funkciji uz uslov 10 < x < 100 i 2 < n < 10, a funkciju za određivanje zadnje tri cifre napraviti zasebno.
+
+Primjer izlaza:
+
+Unesite brojeve x i n: 64 5
+Zadnje tri cifre broja su: 824
+*/
+
+using namespace std;
+
+int triZadnjeCifre(int x, int n) {
+    int broj=pow(x,n);
+    return broj % 1000;
+    
+}
+
+int main()
+{
+    int x,n;
+    cin >> x >> n;
+    cout << triZadnjeCifre(x, n);
+
+    return 0;
+}
