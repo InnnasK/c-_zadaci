@@ -1,0 +1,43 @@
+#include <iostream>
+
+using namespace std;
+
+/*
+Napisati program koji će omogućiti unos minimalno trocifrenih cijelih brojeva u jednodimenzionalni niz od 20 elemenata. Zatim napraviti funkciju koja će u nizu pronaći sve brojeve kojima je prva cifra (početna cifra sa lijeve strane) parna i ukloniti ih iz niza. Uklanjanje elemenata niza obavezno uraditi tako da ne ostaju prazni elementi već da se ostatak niza pomjeri kako ne bi bilo praznih elemenata. Pomjeranje ostatka niza obavezno raditi prilikom uklanjanja elemenata a ne sortiranjem poslije uklanjanja
+*/
+
+int prvaCifra(int n) {
+    int temp=n,cifra;
+    while (temp>0)
+    {
+        cifra = temp % 10;
+        temp /= 10;
+    }
+    return cifra;
+}
+
+int main()
+{
+    int n[20];
+    cout << "Unesi 20 brojeva koji su minimum trocifreni" << endl;
+    for (int i=0;i<20;i++)
+    {
+        cin >> n[i];
+        while (n[i]<100)
+        {
+            cout << "Broj mora biti minimalno trocifren" << endl;
+            cin >> n[i];
+        }
+    }
+    cout << endl;
+    cout << "OUTPUT:" << endl;
+    for (int i=0;i<20;i++)
+    {
+        if(prvaCifra(n[i]) % 2 != 0)
+        {
+            cout << n[i] << endl;
+        }
+    }
+
+    return 0;
+}
