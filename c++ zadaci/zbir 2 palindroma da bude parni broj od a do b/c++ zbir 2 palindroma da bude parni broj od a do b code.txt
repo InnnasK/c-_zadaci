@@ -32,8 +32,13 @@ int main()
                     
                     if (isPalindrom(j) && isPalindrom(k) && j+k==i)
                     {
-                        cout << i << " = " << j << " + " << k << endl;
-                        i+=2;
+                        if (k>9 && j>9)
+                        {
+                            cout << i << " = " << j << " + " << k << endl; 
+                            i+=2;
+                        }
+
+                    }
                         
                     }
                     if (i>b)
