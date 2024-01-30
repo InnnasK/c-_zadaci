@@ -1,54 +1,51 @@
-#include <iostream>
+#include <iostream> 
 
-using namespace std;
+using namespace std; 
 
-bool isPalindrom(int n) { // **** PALINDROM BROJA ****
-    int temp=n, palindrom=0;
-    while (temp>0)
-    {
-        int cifra = temp % 10;
-        palindrom=(palindrom * 10) + cifra;
-        temp/=10;
-    }
-    if (palindrom==n)
-    {
-        return true;
-    }
-    return false;
-}
+bool isPalindrom(int n) { // **** PALINDROM BROJA **** 
+    int temp=n, palindrom=0; 
+    while (temp>0) 
+    { 
+        int cifra = temp % 10; 
+        palindrom=(palindrom * 10) + cifra; 
+        temp/=10; 
+    } 
+    if (palindrom==n) 
+    { 
+        return true; 
+    } 
+    return false; 
+} 
 
-int main()
-{
-    int a, b;
-    cin >> a >> b;
-    for (int i=a;i<=b;i++)
-    {
-        if (i%2==0)
-        {
-            for (int j=0;j<b;j++)
-            {
-                for (int k=0;k<b;k++)
-                {
-                    
-                    if (isPalindrom(j) && isPalindrom(k) && j+k==i)
+int main() 
+{ 
+    int a, b; 
+    cin >> a >> b; 
+    for (int i=a;i<=b;i++) 
+    { 
+        if (i%2==0) 
+        { 
+            for (int j=0;j<b;j++) 
+            { 
+                for (int k=0;k<b;k++) 
+                { 
+
+                    if (isPalindrom(j) && isPalindrom(k) && j+k==i) 
                     {
                         if (k>9 && j>9)
                         {
                             cout << i << " = " << j << " + " << k << endl; 
                             i+=2;
                         }
-
-                    }
-                        
-                    }
-                    if (i>b)
-                    {
-                        break;
-                    }
-                }
-            }  
-        }      
-    }
-
-    return 0;
+                    } 
+                } 
+                if (i>b) 
+                { 
+                    break; 
+                } 
+            }   
+        }       
+    } 
+    
+    return 0; 
 }
