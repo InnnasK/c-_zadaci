@@ -1,0 +1,145 @@
+#include <iostream>
+
+using namespace std;
+
+const int rows = 4;
+const int cols = 4;
+
+bool isBlack(int index1, int index2) {
+    if ((index1+index2) % 2 != 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+int cifraBr(int n) {
+    int temp=n,count=0;
+    while (temp>0)
+    {
+        count++;
+        temp/=10;
+    }
+    return count;
+}
+
+bool isSimetricna(int arr[][cols], int rows, int cols) {
+    for (int i=0;i<rows;i++)
+    {
+        for (int j=i+1;j<cols;j++)
+        {
+            if (arr[i][j]!=arr[j][i])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+int indexRows(int arr[][cols], int red, int cols) {
+    int indexNajbolji = 0;
+    int prosjekRedova[rows] = {0};
+    for (int i=0;i<rows;i++)
+    {
+        for (int j=0;j<cols;j++)
+        {
+            prosjekRedova[i] += arr[i][j];
+        }
+        prosjekRedova[i] /= cols;
+        if (i>0)
+        {
+            if (prosjekRedova[i] > prosjekRedova[indexNajbolji])
+            {
+                indexNajbolji = i;
+            }
+        }
+    }
+    cout << "Najveci prosjek je: " << prosjekRedova[indexNajbolji] << endl;
+    cout << "Index reda sa najvecim prosjekom je ";
+    return indexNajbolji;
+}
+
+int indexCols(int arr[][cols], int rows, int kol) {
+    int indexNajgori = 0;
+    int prosjekKolona[cols] = {0};
+    for (int j=0;j<cols;j++)
+    {
+        for (int i=0;i<rows;i++)
+        {
+            prosjekKolona[j] += arr[i][j];
+        }
+        prosjekKolona[j] /= rows;
+        if (j>0)
+        {
+            if (prosjekKolona[j] > prosjekKolona[indexNajgori])
+            {
+                indexNajgori = j;
+            }
+        }
+    }
+    cout << "Najmanji prosjek je: " << prosjekKolona[indexNajgori] << endl;
+    cout << "Index kolone sa najmanjim prosjekom je: ";
+    return indexNajgori;
+}
+
+void unos(int arr[][cols], int rows, int cols) {
+    for (int i=0;i<rows;i++)
+    {
+        for (int j=0;j<cols;j++)
+        {
+            int unos;
+            if (isBlack(i,j))
+            {
+                do
+                {
+                    cout << "Unesite parni broj sa neparnim brojem cifara (crno polje): " << endl;
+                    cin >> unos;
+                } while(unos%2!=0 && cifraBr(unos)%2==0);
+                arr[i][j]=unos;
+            }
+            else
+            {
+                do
+                {
+                    cout << "Unesite neparni broj sa parnim brojem cifara (bijelo polje): " << endl;                    
+                    cin >> unos;
+                } while(unos%2==0 && cifraBr(unos)%2!=0);
+                arr[i][j]=unos;
+            }
+        }
+    }
+}
+
+void ispis(int arr[][cols], int rows, int cols) {
+    cout << "======================================" << endl;  
+    cout << "Niz ima elemente: " << endl;
+    for (int i=0;i<rows;i++)
+    {
+        for (int j=0;j<cols;j++)
+        {
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << "======================================" << endl;
+}
+
+int main()
+{
+    int arr[rows][cols];
+    unos(arr, rows, cols);
+    ispis(arr, rows, cols);
+    if (isSimetricna(arr, rows, cols))
+    {
+        cout << "Niz je simetrican po glavnoj dijagonali." << endl;  
+        cout << indexRows(arr, rows, cols) << endl;
+    }
+    else
+    {
+        cout << "Niz nije simetrican po glavnoj dijagonali." << endl;     
+        cout << indexCols(arr, rows, cols) << endl;
+    }
+    cout << "======================================" << endl;
+    return 0;
+}
