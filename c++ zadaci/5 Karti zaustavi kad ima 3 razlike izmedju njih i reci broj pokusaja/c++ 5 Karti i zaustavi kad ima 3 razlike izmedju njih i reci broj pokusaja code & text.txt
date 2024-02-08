@@ -1,0 +1,36 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+/*
+Izvuci 5 karti (1-14) i ako je razlika izmedju tih 5 karti 3 onda zaustavi program i ispisi te brojeve i ispisi broj pokusaja dok nisi dosao do toga
+*/
+    
+int main()
+{
+    int a[5], brojacPokusaja=0;
+    int len = sizeof(a) / sizeof(a[0]);
+    srand(time(0));
+    while (true)
+    {
+        for (int i=0;i<5;i++)
+        {
+            a[i]=rand() % 14+1;
+        }
+        sort(a, a + len);
+        brojacPokusaja++;
+        if (a[0]==a[1]-3 && a[1]==a[2]-3 && a[2]==a[3]-3 && a[3]==a[4]-3)
+        {
+            break;
+        }
+    }
+    
+    for (int i=0;i<5;i++)
+    {
+        cout << a[i] << " ";
+    }
+    cout << endl;
+    cout << "Broj pokusaja: " << brojacPokusaja << endl;
+    return 0;
+}
