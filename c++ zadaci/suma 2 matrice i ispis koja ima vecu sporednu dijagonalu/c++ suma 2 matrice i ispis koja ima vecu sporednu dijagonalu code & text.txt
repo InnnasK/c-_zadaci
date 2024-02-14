@@ -1,0 +1,119 @@
+#include <iostream>
+
+/*
+ISPISATI 2 MATRICE SA RANDOM VRIJEDNOSTIMA (1-15), SABRATI I ISPISATI MATRICU SA TIM VRIJEDNOSTIMA, ISPISATI NA KRAJU KOJA OD PRVE 2 MATRICE IMA VECU SPOREDNU DIAGONALU
+*/
+
+using namespace std;
+
+const int MAX_ROWS = 10;
+const int MAX_COLS = 10;
+
+int getRandomValue(int from, int to) {
+    return  rand() % (to - from + 1) + from;
+}
+
+void setRandomValues(int matrix[][MAX_COLS], int rows, int columns, int from, int to) {
+    for (int i=0; i<rows; i++)
+    {
+        for (int j=0; j<columns; j++)
+        {
+           matrix[i][j] = getRandomValue(from, to);
+        }
+    }
+}
+
+void printMatrix(int matrix[][MAX_COLS], int rows, int columns) {
+    for (int i=0; i<rows; i++)
+    {
+        for (int j=0; j<columns; j++)
+        {
+           cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void sumMatrix(int m1[][MAX_COLS], int m2[][MAX_COLS], int m3[][MAX_COLS], int r1, int c1, int r2, int c2) {
+    int rows = (r1 > r2 ? r1 : r2); // if r1 > r2 then take r1 else take r2
+    int cols = (c1 > c2 ? c1 : c2); // if c1 > c2 then take c1 else take c2
+    
+    for (int i=0; i<rows; i++)
+    {
+        for (int j=0; j<cols; j++)
+        {
+           m3[i][j] = m1[i][j] + m2[i][j];
+        }
+    }
+}
+
+int biggerSideDiagonal(int m1[][MAX_COLS], int m2[][MAX_COLS], int r1, int c1, int r2, int c2) {
+    int suma1 = 0;
+    int suma2 = 0;
+    
+    for (int i=0; i<r1; i++)
+    {
+        suma1 += m1[i][c1-i-1];
+    }
+    for (int i=0; i<r2; i++)
+    {
+        suma2 += m2[i][c2-i-1];
+    }
+    
+    return suma1 > suma2 ? 1 : 2;
+}
+
+int main()
+{
+    srand(time(0));
+    int r1 = 1, c1 = 1 , r2 = 1, c2 = 1;
+    do {
+		cout << "Unesite broj redova za prvu matricu: " << endl;
+		cin >> r1;
+		cout << "Unesite broj kolona za prvu matricu: " << endl;
+		cin >> c1;
+	} while (r1 < 1 || c1 < 1);
+	do {
+		cout << "Unesite broj redova za drugu matricu: " << endl;
+		cin >> r2;
+		cout << "Unesite broj kolona za drugu matricu: " << endl;
+		cin >> c2;
+	} while (r2 < 1 || c2 < 1);
+	
+	// kreiranje matrice m1 i postavljanje vrijednosti na 0
+	int m1[MAX_ROWS][MAX_COLS] = {0};
+	// kreiranje matrice m2 i postavljanje vrijednosti na 0
+	int m2[MAX_ROWS][MAX_ROWS] = {0};
+
+	// randomizacija vrijednosti
+	int from = 1, to = 15;
+	setRandomValues(m1, r1, c1, from, to);
+	setRandomValues(m2, r2, c2, from, to);
+
+	// printanje prve matrice
+	cout << "Matrica M1: " << endl;
+	printMatrix(m1, r1, c1);
+	cout << endl;
+	cout << "Matrica M2: " << endl;
+	printMatrix(m2, r2, c2);
+
+	// kreiranje matrice m3 i postavljanje vrijednosti na 0
+	int m3[MAX_ROWS][MAX_ROWS] = { 0 };
+
+	sumMatrix(m1, m2, m3, r1, c1, r2, c2);
+
+	int r3 = (r1 > r2 ? r1 : r2);
+	int c3 = (c1 > c2 ? c1 : c2);
+	cout << "Matrica M3 formirana sumiranjem brojeva matrica m1 i m2: " << endl;
+	printMatrix(m3, r3, c3);
+	if (r1 == c1 && r2 == c2)
+	{
+		cout << "Matrica sa vecom sumom sporedne dijagonale je: " << biggerSideDiagonal(m1, m2, r1, c1, r2, c2) << ". matrica";
+	}
+	else
+	{
+		cout << "Broj kolona i redova nije jednak kod obe matrice." << endl;
+	}
+    
+    return 0;
+}
