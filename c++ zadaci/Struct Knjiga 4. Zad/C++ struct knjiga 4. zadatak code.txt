@@ -1,0 +1,109 @@
+#include <iostream>
+#include <sstream>
+
+using namespace std;
+
+int prebrojiRijeci(const string& recenica)
+{
+    int brojac=0;
+    istringstream stream(recenica);
+    string rijec;
+    while (stream >> rijec)
+    {
+        brojac++;
+    }
+    return brojac;
+}
+
+struct Book 
+{
+  char *imeKnjige;
+  char *imeAutora;
+  int brojOcjena;
+  int *ocjena;
+  
+  Book() { // KAD OVAKO ZOVNEMO Book() u STRUCT BOOK TO SE ZOVE CONSTRUCTOR I ON SE POZOVE AUTOMATSKI I IZVRSI SVE U NJEMU
+      imeKnjige = new char[100];
+      imeAutora = new char[100];
+      
+      brojOcjena = 0;
+  }
+  
+  ~Book() { // KAD OVAKO ZOVNEMO ~Book() u STRUCT BOOK TO SE ZOVE DESTRUCTOR I ON SE POZOVE AUTOMATSKI I IZVRSI SVE U NJEMU (dereferencira)
+      delete[] imeKnjige;
+      imeKnjige = nullptr;
+      delete[] imeAutora;
+      imeAutora = nullptr;
+      delete[] ocjena;
+      ocjena = nullptr;
+  }
+  
+  void unos() {
+      cout << "Unesite naziv knjige: ";
+      cin.getline(imeKnjige, 100);
+      cout << "Unesite ime autora: ";
+      cin.getline(imeAutora, 100);
+      cout << "Unesite broj ocjena: ";
+      cin >> brojOcjena;
+      ocjena = new int[brojOcjena];
+      for (int i=0;i<brojOcjena;i++)
+      {
+          cin >> *(ocjena+i);
+          cin.ignore(); // STAVLJAM cin.ignore() da mi ne pika kad stisnem space i taj invisible simbol da stavi u sljedeci unos (cin)
+      }
+  }
+  
+  
+  void ispis() {
+      cout << "Naziv knjige: " << imeKnjige << endl;
+      cout << "Ime autora: " << imeAutora << endl;
+      cout << "Broj ocjena: " << brojOcjena << endl;
+      cout << "Ocjene: ";
+      for (int i=0;i<brojOcjena;i++)
+      {
+          cout << *(ocjena+i) << " ";
+      }
+      cout << endl;
+  }
+  
+  int prosjekOcjena() {
+      float avg=0;
+      for (int i=0;i<brojOcjena;i++)
+      {
+          avg += *(ocjena+i);
+      }
+      avg /= brojOcjena;
+      
+      return avg;
+  }
+    
+};
+
+int main()
+{
+    int brojKnjiga;
+    cout << "Unesite broj knjiga: ";
+    cin >> brojKnjiga;
+    cin.ignore(); // STAVLJAM cin.ignore() da mi ne pika kad stisnem space i taj invisible simbol da stavi u sljedeci unos (cin)
+    Book* niz = new Book[brojKnjiga]; // ZATO STO IMA VISE KNJIGA MORAMO REFERENCIRATI SVE KNJIGE (u redu)
+    for (int i=0;i<brojKnjiga;i++)
+    {
+        (*(niz+i)).unos(); // NE MOZEMO STAVITI SAMO *(n+i).unos() ZBOG TE "." JER JE U C++-U JACA TACKA OD "*" PA MORAMO STAVITI SVE U ZAGRADU (*(niz+i)).unos()
+        // MOZEMO I KORISTITI (niz+i)->unos() UMJESTO (*(niz+i)).unos()
+    }
+    int indeks=0;
+    for (int i=0;i<brojKnjiga;i++)
+    {
+        (*(niz+i)).ispis(); // ISTA STVAR KAO I MALOPRIJE
+        cout << "Ime knjige ima " << prebrojiRijeci((*(niz+i)).imeKnjige) << " rijeci" << endl; // ISTA STVAR KAO I MALOPRIJE
+        if (i != 0 && (*(niz+i)).prosjekOcjena() > (*(niz+indeks)).prosjekOcjena()) // ISTA STVAR KAO I MALOPRIJE
+        {
+            indeks = i;
+        }
+    }
+    cout << "Najveci prosjek ocjena je na indeksu: " << indeks << endl;
+    delete[] niz;
+    niz = nullptr;
+    
+    return 0;
+}
