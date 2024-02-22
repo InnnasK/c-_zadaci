@@ -3,12 +3,12 @@
 
 using namespace std;
 
-int prebrojiRijeci(const string& recenica)
+int prebrojiRijeci(const string& recenica) // OVO ZNACI DA ZBOG "&" CE UZETI ORGINALNI string recenica ALI ZBOG const GA NECE MIJENJATI I OPTIMIZUJE KOD BOLJE JER NE KREIRA KOPIJU (npr kad ne bi imali &)
 {
     int brojac=0;
-    istringstream stream(recenica);
-    string rijec;
-    while (stream >> rijec)
+    istringstream stream(recenica); //
+    string rijec; // OVDJE CE ">>" STAVLJATI RIJEC PO RIJEC IS stream-a recenica. >> SE MOZE KORISTITI ZA STRINGOVE, A > NE MOZE JER NE MOZEMO KOMPARIRATI STREAM I STRING
+    while (stream >> rijec) // OVDJE KADA STAVIMO ">>" ON UZME SVAKU RIJEC OD "cijelo ime knjige" I TU JEDNU PO JEDNU RIJEC STAVI U "rijec" PA BROJAC POVECA ZA 1 I SVE TAKO DOK NEMA VISE RIJECI
     {
         brojac++;
     }
