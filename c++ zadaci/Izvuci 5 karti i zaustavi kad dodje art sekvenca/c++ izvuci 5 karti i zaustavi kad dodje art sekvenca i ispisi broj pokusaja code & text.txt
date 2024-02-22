@@ -1,0 +1,66 @@
+#include <iostream>
+
+using namespace std;
+
+/*
+Izvuci 5 karti pa ih sortiraj (Bez koristenja sort() funkcije) i ako su te karte art sekvenca (da je izmedju njih uvijek ista razlika) onda ispisati te karte i ispisati broj pokusaja
+*/
+
+void sortaj(int n[]) {
+    for (int i=0;i<5;i++)
+    {
+        for (int j=0;j<5;j++)
+        {
+            if (n[j] > n[i])
+            {
+                int temp = n[j];
+                n[j] = n[i];
+                n[i] = temp;
+            }
+        }
+    }
+}
+
+bool artSekvenca(int n[]) {
+    int razlika1 = n[1] - n[1-1];
+    for (int i=2;i<5;i++)
+    {
+        int razlika2 = n[i] - n[i-1];
+        if (razlika1 != razlika2)
+        {
+            return false;
+        }
+        else
+        {
+            razlika1 = razlika2;
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    srand(time(0));
+    int n[5], brojac=0;
+    while (true)
+    {
+        for (int i=0;i<5;i++)
+        {
+            n[i] = rand() % 14 + 1;
+        }
+        sortaj(n);
+        brojac++;
+        
+        if (artSekvenca(n))
+        {
+            break;
+        }
+    }
+    cout << "Karte: ";
+    for (int i=0;i<5;i++)
+    {
+        cout << n[i] << " ";
+    }
+    cout << endl << "Broj pokusaja: " << brojac;
+    return 0;
+}
