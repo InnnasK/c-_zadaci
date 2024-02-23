@@ -1,0 +1,111 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+int getRandValues() {
+    return rand() % 14 + 1;
+}
+
+void inputMatrix(int**& matrix, int rows, int cols) {
+    matrix = new int*[rows];
+    for (int i=0;i<rows;i++)
+    {
+        *(matrix+i) = new int[cols];
+    }
+    
+    for (int i=0;i<rows;i++)
+    {
+        for (int j=0;j<cols;j++)
+        {
+            *(*(matrix+i)+j) = getRandValues();
+        }
+    }
+}
+
+void printMatrix(int** matrix, int rows, int cols) {
+    for (int i=0;i<rows;i++)
+    {
+        for (int j=0;j<cols;j++)
+        {
+            cout << *(*(matrix+i)+j) << " ";
+        }
+        cout << endl;
+    }
+}
+
+void sumMatrix(int** m1, int** m2, int**& m3, int r1, int c1, int r2, int c2, int r3, int c3) {
+    m3 = new int*[r3];
+    for (int i = 0; i < r3; ++i) 
+    {
+        m3[i] = new int[c3];
+        int* currentRow = m3[i];
+        for (int j = 0; j < c3; ++j) 
+        {
+            *(currentRow + j) = 0; // Initialize with zeros
+        }
+    }
+
+    // Perform summation
+    for (int i = 0; i < r3; ++i) 
+    {
+        for (int j = 0; j < c3; ++j) 
+        {
+            if (i < r1 && j < c1) 
+            {
+                *(*(m3 + i) + j) += *(*(m1 + i) + j); // Add corresponding element from m1
+            }
+            if (i < r2 && j < c2) 
+            {
+                *(*(m3 + i) + j) += *(*(m2 + i) + j); // Add corresponding element from m2
+            }
+        }
+    }
+}
+
+void cleanup(int**& matrix, int rows) {
+    for (int i=0;i<rows;i++)
+    {
+        delete[] matrix[i];
+        matrix[i] = nullptr;
+    }
+    delete[] matrix;
+    matrix = nullptr;
+}
+
+int main()
+{
+    srand(time(0));
+    int r1=0, c1=0, r2=0, c2=0;
+    cout << "Unesite red i kolonu za 1. matricu: ";
+    cin >> r1 >> c1;
+    cout << "Unesite red i kolonu za 2. matricu: ";
+    cin >> r2 >> c2;
+    
+    int** m1 = nullptr;
+    int** m2 = nullptr;
+    
+    int r3 = (r1 > r2 ? r1 : r2);
+    int c3 = (c1 > c2 ? c1 : c2);
+    
+    inputMatrix(m1, r1, c1);
+    inputMatrix(m2, r2, c2);
+    
+    int** m3= nullptr;
+    sumMatrix(m1, m2, m3, r1, c1, r2, c2, r3, c3);
+    
+    cout << "Matrica 1:" << endl;
+    printMatrix(m1, r1, c1);
+    cout << "Matrica 2:" << endl;
+    printMatrix(m2, r2, c2);
+    cout << endl;
+    cout << "Matrica 3:" << endl;
+    printMatrix(m3, r3, c3);
+    
+    cleanup(m1, r1);
+    cleanup(m2, r2);
+    cleanup(m3, r3);
+
+    return 0;
+}
