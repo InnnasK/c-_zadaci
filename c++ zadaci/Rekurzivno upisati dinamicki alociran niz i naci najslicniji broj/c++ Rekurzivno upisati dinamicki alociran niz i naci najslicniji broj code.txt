@@ -1,0 +1,67 @@
+#include <iostream>
+#include <climits> // za INT_MAX
+#include <cmath> // za abs (absolute value npr |-32| > 32)
+
+using namespace std;
+
+void unos(int n, int* niz, int indeks=0) {
+    if (n > indeks)
+    {
+        cin >> *(niz+indeks);
+        unos(n, niz, indeks+1);
+    }
+}
+
+void printArr(int n, int* niz) {
+    for (int i=0;i<n;i++)
+    {
+        cout << *(niz+i) << " ";
+    }
+}
+
+void findElement(int n, int* niz, int broj, int& closest, int& minDiff, int index = 0) {
+    if (index == n) {
+        return; // Base case: End of array
+    }
+
+    int currentDiff = abs(*(niz + index) - broj); // Calculate the difference between the current element and the target (broj)
+
+    if (currentDiff < minDiff) {
+        closest = *(niz + index); // Update the closest element
+        minDiff = currentDiff; // Update the minimum difference
+    }
+
+    // Recursively call findElement for the next element in the array
+    findElement(n, niz, broj, closest, minDiff, index + 1);
+}
+
+void cleanup(int*& niz) { // ide & jel niz stavljam da je "=" necemu (nullptr)
+    delete[] niz;
+    niz = nullptr;
+}
+
+int main()
+{
+    int n,broj;
+    cout << "Unesite velicinu niza: ";
+    cin >> n;
+    int* niz = new int[n];
+    
+    cout << "Unesite elemente niza: " << endl;
+    unos(n, niz);
+    cout << "Niz ima elemente: ";
+    printArr(n, niz);
+    cout << "Unesite broj koji zelite da potrazite: ";
+    cin >> broj;
+    
+    int closest = 0;
+    int minDiff = INT_MAX;
+    
+    findElement(n, niz, broj, closest, minDiff);
+    
+    cout << "Najslicniji element je: " << closest;
+    
+    cleanup(niz);
+    
+    return 0;
+}
