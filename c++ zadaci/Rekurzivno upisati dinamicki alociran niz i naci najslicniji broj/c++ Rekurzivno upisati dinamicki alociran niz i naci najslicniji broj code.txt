@@ -12,10 +12,11 @@ void unos(int n, int* niz, int indeks=0) {
     }
 }
 
-void printArr(int n, int* niz) {
-    for (int i=0;i<n;i++)
+void printArr(int n, int* niz, int indeks=0) {
+    if (n>indeks)
     {
-        cout << *(niz+i) << " ";
+        cout << *(niz+indeks) << " ";
+        printArr(n, niz, indeks+1);
     }
 }
 
@@ -51,6 +52,7 @@ int main()
     unos(n, niz);
     cout << "Niz ima elemente: ";
     printArr(n, niz);
+    cout << endl;
     cout << "Unesite broj koji zelite da potrazite: ";
     cin >> broj;
     
