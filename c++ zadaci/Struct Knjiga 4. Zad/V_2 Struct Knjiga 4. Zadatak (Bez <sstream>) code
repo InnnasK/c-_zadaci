@@ -1,0 +1,119 @@
+#include <iostream>
+
+using namespace std;
+
+int prebrojiRijeci(const string& recenica) {
+    int brojac = 0;
+    bool uRecenici = false;
+
+    for (char c : recenica) { // napravim char zvan 'c' koji ce gledati slovo po slovo u recenici
+        if (c == ' ') // kad naidje na space to znaci da smo bili na rijeci i sad smo na space-u
+        {
+            if (uRecenici) // kad je uRecenici = true to znaci da smo bili na rijeci i sad smo na space-u
+            {
+                brojac++;
+                uRecenici = false;
+            }
+        } 
+        else if (!uRecenici) { // kada je uRecenici = false to znaci da smo bili na space-u i sad ulazimo u rijec
+            uRecenici = true;
+        }
+    }
+    if (uRecenici) // ovo je tu ako zadnji karakter u recenici nije bio space
+    {
+        brojac++;
+    }
+
+    return brojac;
+    
+}
+
+struct book {
+    char* imeKnjige;
+    char* imeAutora;
+    int brojOcjena;
+    int* ocjene;
+    
+    book() {
+          imeKnjige = new char[100];
+          imeAutora = new char[100];
+          
+          brojOcjena = 0;
+    }
+    ~book() {
+        delete[] imeKnjige;
+        imeKnjige = nullptr;
+        delete[] imeAutora;
+        imeAutora = nullptr;
+        delete[] ocjene;
+        ocjene = nullptr;
+    }
+    
+    void upis() {
+        cout << "Unesite ime knjige: ";
+        cin.getline(imeKnjige, 100);
+        cout << "Unesite ime autora: ";
+        cin.getline(imeAutora, 100);
+        cout << "Unesite broj ocjena: ";
+        cin >> brojOcjena;
+        cout << "Unesite ocjene: " << endl;
+        ocjene = new int[brojOcjena];
+        for (int i=0;i<brojOcjena;i++)
+        {
+            cin >> *(ocjene+i);
+            cin.ignore();
+        }
+    }
+    
+    void ispis() {
+        cout << "Ime knjige: " << imeKnjige << endl;
+        cout << "Ime autora: " << imeAutora << endl;
+        cout << "Broj ocjena: " << brojOcjena << endl;
+        cout << "Ocjene: " << endl;
+        for (int i=0;i<brojOcjena;i++)
+        {
+            cout << *(ocjene+i) << " ";
+        }
+        cout << endl;
+    }
+    
+    float prebrojiAvg() {
+        float avg=0;
+        for (int i=0;i<brojOcjena; i++)
+        {
+            avg += *(ocjene+i);
+        }
+        avg /= brojOcjena;
+        
+        return avg;
+    }
+};
+
+int main()
+{
+    int brojKnjiga;
+    cout << "Unesite broj knjiga: ";
+    cin >> brojKnjiga;
+    cin.ignore();
+    book* niz = new book[brojKnjiga];
+    for (int i=0;i<brojKnjiga;i++)
+    {
+        (*(niz+i)).upis();
+    }
+    int indeks=0;
+    for (int i=0;i<brojKnjiga;i++)
+    {
+        (*(niz+i)).ispis();
+        cout << "Recenica ima " << prebrojiRijeci((*(niz+i)).imeKnjige) << " rijeci" << endl;
+        if (i != 0 && (*(niz+i)).prebrojiAvg() > (*(niz+indeks)).prebrojiAvg())
+        {
+            indeks = i;
+        }
+    }
+    cout << "Knjiga sa najvecim prosjekom ocjena je na indeksu: " << indeks;
+    
+    delete[] niz;
+    niz = nullptr;
+
+    return 0;
+}
