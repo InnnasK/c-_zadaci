@@ -64,6 +64,22 @@ void sumMatrix(int** m1, int** m2, int**& m3, int r1, int c1, int r2, int c2, in
     }
 }
 
+int biggerSideDiagonal(int** m1, int** m2, int r1, int r2, int c1, int c2) {
+    int suma1=0;
+    int suma2=0;
+    
+    for (int i=0;i<r1;i++)
+    {
+        suma1 += *(*(m1+i) + (c1-i-1));
+    }
+    for (int i=0;i<r2;i++)
+    {
+        suma2 += *(*(m2+i) + (c2-i-1));
+    }
+    
+    return (suma1 > suma2 ? 1 : 2);
+}
+
 void cleanup(int**& matrix, int rows) {
     for (int i=0;i<rows;i++)
     {
@@ -102,6 +118,15 @@ int main()
     cout << endl;
     cout << "Matrica 3:" << endl;
     printMatrix(m3, r3, c3);
+    
+    if (r1 == c1 && r2 == c2)
+	{
+		cout << "Matrica sa vecom sumom sporedne dijagonale je: " << biggerSideDiagonal(m1, m2, r1, r2, c1, c2) << ". matrica";
+	}
+	else
+	{
+		cout << "Broj kolona i redova nije jednak kod obe matrice." << endl;
+	}
     
     cleanup(m1, r1);
     cleanup(m2, r2);
