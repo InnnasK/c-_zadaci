@@ -37,13 +37,12 @@ void printMatrix(int** matrix, int rows, int cols) {
 
 void sumMatrix(int** m1, int** m2, int**& m3, int r1, int c1, int r2, int c2, int r3, int c3) {
     m3 = new int*[r3];
-    for (int i = 0; i < r3; i++) 
+    for (int i = 0; i < r3; ++i) 
     {
-        m3[i] = new int[c3];
-        int* currentRow = m3[i];
-        for (int j = 0; j < c3; j++) 
+        *(m3+i) = new int[c3];
+        for (int j = 0; j < c3; ++j) 
         {
-            *(currentRow + j) = 0; // Initialize with zeros
+            *(*(m3+i)+j) = 0; // Initialize with zeros
         }
     }
 
